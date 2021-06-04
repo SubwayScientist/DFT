@@ -16,14 +16,12 @@ def pretty_print(A):
         print("  .  ", end =" ")
     print()
 
-N=200
+N=3
 
 W = np.zeros([N,N],dtype=complex)
-Z = np.zeros([N,N],dtype=complex)
 
 
 omega = np.exp(-1.j * 2 * np.pi/N)
-omega2 = np.exp(1.j * 2 * np.pi/N)
 
 for n in range(N):
   for m in range(N):
@@ -32,11 +30,35 @@ for n in range(N):
 np.set_printoptions(formatter={'float': '{: 0.3f}'.format})
 #A = W.dot(np.conj(W.T))  # W*W^dag   <-- remplace this line
 
-for n in range(N):
-  for m in range(N):
-    Z[m,n] = omega2**(n*m)/(np.sqrt(N))
+Z = np.conj(W.T)
+#A = W.dot(Z)
 
-A = W.dot(Z)
+
+
+
+A = np.zeros([N,N],dtype=complex)
+for n in range(N):
+    for m in range(N):
+        for k in range(N):
+            prod=W[n,k]*Z[k,m]
+            A[n,m] += prod
+
+
+
+
 
 
 PrettyPrintComplexMatrix(A)
+
+
+
+
+
+
+
+
+
+
+
+
+
